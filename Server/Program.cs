@@ -1,5 +1,5 @@
 
-using Microsoft.EntityFrameworkCore; 
+using Microsoft.EntityFrameworkCore;
 using TodoApi;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,8 +10,8 @@ new MySqlServerVersion(new Version(8, 0, 21))));
 //Cors
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowSpecificOrigin",
-        policy => policy.WithOrigins("http://localhost:3000")
+    options.AddPolicy("AllowAll",
+        policy => policy.WithOrigins("")
                         .AllowAnyHeader()
                         .AllowAnyMethod());
 });
@@ -46,11 +46,11 @@ app.MapPost("/addItem", async (ToDoDbContext db, Item item) =>
     return Results.Created($"/addItem/{item.Id}", item);
 });
 
-app.MapPut("/updateItem/{id}", async (ToDoDbContext db,int id, Item item) =>
+app.MapPut("/updateItem/{id}", async (ToDoDbContext db, int id, Item item) =>
 {
     var i = await db.Items.FindAsync(id);
     if (i == null) return Results.NotFound();
-    
+
     i.IsComplete = item.IsComplete;
     await db.SaveChangesAsync();
     return Results.Ok(i);
@@ -60,7 +60,7 @@ app.MapDelete("/removeItem/{id}", async (ToDoDbContext db, int id) =>
 {
     var item = await db.Items.FirstOrDefaultAsync(x => x.Id == id);
     if (item == null) return Results.NotFound();
-    
+
     db.Items.Remove(item);
     await db.SaveChangesAsync();
     return Results.NoContent();
