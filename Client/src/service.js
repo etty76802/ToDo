@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const apiUrl = "http://localhost:5068";
+const apiUrl = "https://server-m62b.onrender.com";
 
 const service = {
   // שליפת כל המשימות
