@@ -22,7 +22,7 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Enable CORS
-app.UseCors("AllowSpecificOrigin");
+app.UseCors("AllowAll"); // זה חייב להיות בדיוק כמו שהגדרת קודם
 
 // Enable Swagger
 if (app.Environment.IsDevelopment())
