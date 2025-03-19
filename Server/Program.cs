@@ -7,11 +7,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ToDoDbContext>(options => options.UseMySql(builder.Configuration.GetConnectionString("ToDoDB"),
 new MySqlServerVersion(new Version(8, 0, 21))));
 
-//Cors
+// CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll",
-        policy => policy.WithOrigins("")
+        policy => policy.WithOrigins("https://client-23fx.onrender.com") // הגדר את המקור שמותר לו לבצע בקשות
                         .AllowAnyHeader()
                         .AllowAnyMethod());
 });
